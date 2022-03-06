@@ -1,0 +1,29 @@
+#publish GitHub workflow artifacts tutorial example
+name: publish Github actions artifacts example
+
+on:
+  push:
+    branches: [ main ]
+    
+jobs:
+
+  archive-build-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: step 1 - create temporary artifacts downloads folder
+        run: mkdir downloads
+        
+      - name: step 2 - add artifacts to publish to the temp folder
+        run: |
+          cd downloads
+          echo "alpha"   > alpha.html
+          echo "braco"   > bravo.html
+          echo "charlie" > charlie.html
+          cd ..
+          
+       - name: step 3 - use the opload artifact Github Actions
+         uses: actions/upload-artifact@v2
+         with:
+           name: assets-for-download
+           path: downloads
